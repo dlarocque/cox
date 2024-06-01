@@ -1,0 +1,6 @@
+.idea/
+.vscode/
+.cache/
+cmake-build-debug/
+build/
+*.un~
