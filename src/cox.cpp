@@ -164,7 +164,7 @@ public:
     }
 };
 
-int main() {
+int runFile(const char* path) {
     // Open the source file
     std::string source;
     std::stringstream buffer;
@@ -180,7 +180,7 @@ int main() {
     sourceFile.close();
     
     std::cout << "Source code: " << source << std::endl;
-    
+
     // Tokenize source code
     Scanner scanner(source);
     const auto& tokens = scanner.scanTokens();
@@ -188,5 +188,37 @@ int main() {
     // Print out all tokens
     for (const auto& token : tokens) {
         std::cout << token.toString() << std::endl;
+    }
+}
+
+int run(std::string source) {
+    Scanner scanner(source);
+    const auto& tokens = scanner.scanTokens();
+    for (const auto& token : tokens) {
+        std::cout << token.toString() << std::endl;
+    }
+    return EXIT_SUCCESS;
+}
+
+int runPrompt() {
+    for (;;) { // Runs until ctrl+c pressed
+        // Read a line of input from stdin
+        std::string line;
+        std::getline(std::cin, line);
+        Scanner scanner(line);
+        const auto& tokens = scanner.scanTokens();
+        for (const auto& token : tokens) {
+            std::cout << token.toString() << std::endl;
+        }
+    }
+}
+
+int main(int argc, char** argv) {
+    if (argc > 2) {
+        std::cerr << "Usage: cox [source file]" << std::endl;
+    } else if (argc == 2) {
+        return runFile(argv[1]);
+    } else {
+        return runPrompt();
     }
 }
