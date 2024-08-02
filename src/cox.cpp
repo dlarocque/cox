@@ -5,6 +5,8 @@
 #include <cctype>
 #include <vector>
 
+using namespace std;
+
 enum TOKEN_TYPE {
     LEFT_PAREN,
     RIGHT_PAREN,
