@@ -62,15 +62,3 @@ void Cox::error(int line, string message) {
 void Cox::report(int line, string where, string message) {
     cout << "[line " << line << "]" << "Error: " << where << ": " << message << endl;
 }
-
-int main(int argc, char** argv) {
-    if (argc > 2) {
-        cerr << "Usage: cox [source file]" << endl;
-    } else  {
-        if (argc == 2) {
-            Cox::runFile(argv[1]);
-        } else {
-            Cox::runPrompt();
-        }
-    }
-}

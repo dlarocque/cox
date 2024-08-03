@@ -1,6 +1,10 @@
 .idea/
 .vscode/
 .cache/
-cmake-build-debug/
-build/
 *.un~
+bazel-build
+bazel-bin
+bazel-out
+bazel-testlogs
+bazel-cox
+MODULE*
