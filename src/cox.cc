@@ -2,8 +2,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include "cox.hpp"
-#include "scanner.hpp"
+#include "cox.h"
+#include "scanner.h"
 
 using namespace std;
 

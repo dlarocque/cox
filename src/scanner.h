@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <cctype>
-#include "token.hpp"
-#include "cox.hpp"
+#include "token.h"
+#include "cox.h"
 
 using namespace std;
 
