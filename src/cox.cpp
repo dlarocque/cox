@@ -2,18 +2,19 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include "cox.hpp"
 #include "scanner.hpp"
 
 using namespace std;
 
-int runFile(const char* path) {
+void Cox::runFile(const char* path) {
     // Open the source file
     string source;
     stringstream buffer;
     ifstream sourceFile("helloworld.cox");
     if (!sourceFile.is_open()) {
         cerr << "Error: Could not open source file" << endl;
-        return 1;
+        exit(1); // FIXME: Should this be an exception instead?
     }
     
     // Read the source file
@@ -33,16 +34,15 @@ int runFile(const char* path) {
     }
 }
 
-int run(string source) {
+void Cox::run(string source) {
     Scanner scanner(source);
     const auto& tokens = scanner.scanTokens();
     for (const auto& token : tokens) {
         cout << token.toString() << endl;
     }
-    return EXIT_SUCCESS;
 }
 
-int runPrompt() {
+void Cox::runPrompt() {
     for (;;) { // Runs until ctrl+c pressed
         // Read a line of input from stdin
         string line;
@@ -55,12 +55,22 @@ int runPrompt() {
     }
 }
 
+void Cox::error(int line, string message) {
+    report(line, "", message);
+}
+
+void Cox::report(int line, string where, string message) {
+    cout << "[line " << line << "]" << "Error: " << where << ": " << message << endl;
+}
+
 int main(int argc, char** argv) {
     if (argc > 2) {
         cerr << "Usage: cox [source file]" << endl;
-    } else if (argc == 2) {
-        return runFile(argv[1]);
-    } else {
-        return runPrompt();
+    } else  {
+        if (argc == 2) {
+            Cox::runFile(argv[1]);
+        } else {
+            Cox::runPrompt();
+        }
     }
 }

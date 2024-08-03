@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cctype>
 #include "token.hpp"
+#include "cox.hpp"
 
 using namespace std;
 
@@ -54,7 +55,7 @@ public:
                     cout << "identifier" << endl;
                     identifier();
                 } else {
-                    cerr << "Error: Unexpected character" << endl;
+                    Cox::error(line, "Unexpected character");
                 }
                 break;
         }
