@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -8,9 +9,9 @@
 class Scanner {
     std::string source;
     std::vector<Token> tokens;
-    int start = 0; // First character in the lexeme being scanned
-    int current = 0; // Character currently being scanned
-    int line = 1;
+    uint64_t start = 0; // First character in the lexeme being scanned
+    uint64_t current = 0; // Character currently being scanned
+    uint64_t line = 1;
     
 public:
     explicit Scanner(std::string source): source(std::move(source)) {}
@@ -46,10 +47,10 @@ public:
             default:
                 if (isdigit(currChar) != 0) {
                     std::cout << "number" << '\n';
-                    number();
+                    captureNumber();
                 } else if (isalpha(currChar) != 0) {
                     std::cout << "identifier" << '\n';
-                    identifier();
+                    captureIdentifier();
                 } else {
                     Cox::error(line, "Unexpected character");
                 }
@@ -58,17 +59,13 @@ public:
     }
     
     // TODO (dlarocque): We need to store more than string literals
-    void addToken(TOKEN_TYPE type, const std::string& stringLiteral) {
+    void addToken(TOKEN_TYPE type, const std::variant<std::string, int, float>& literal) {
         auto text = source.substr(start, current - start);
-        tokens.emplace_back(type, text, stringLiteral, line);
+        tokens.emplace_back(type, text, literal, line);
     }
     
     auto advance() -> char {
         return source[current++];
-    }
-    
-    auto number() -> void {
-        // TODO (dlarocque): Implement this
     }
     
     auto peek() -> char {
@@ -107,7 +104,17 @@ public:
         }
     }
     
-    void identifier() {
+    auto captureNumber() -> void {
+        // TODO (dlarocque): Implement this
+        while(isdigit(peek()) != 0) {
+            advance();
+        }
+
+        auto value = source.substr(start, current - start);
+        addToken(NUMBER, "");
+    }
+    
+    void captureIdentifier() {
         while(isalnum(peek()) != 0) {
             advance();
         }

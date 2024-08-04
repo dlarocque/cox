@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <iostream>
 #include <string>
 #include "cox.h"
@@ -35,10 +36,10 @@ void Cox::runPrompt() {
     }
 }
 
-void Cox::error(const int& line, const std::string& message) {
+void Cox::error(const uint64_t& line, const std::string& message) {
     report(line, "", message);
 }
 
-void Cox::report(const int& line, const std::string& where, const std::string& message) {
+void Cox::report(const uint64_t& line, const std::string& where, const std::string& message) {
     std::cout << "[line " << line << "]" << "Error: " << where << ": " << message << '\n';
 }

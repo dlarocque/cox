@@ -1,5 +1,6 @@
 #include <string>
 #include <utility>
+#include <variant>
 
 enum TOKEN_TYPE {
     LEFT_PAREN,
@@ -41,14 +42,13 @@ class Token {
 private:
     TOKEN_TYPE type;
     std::string lexeme;
-    std::string stringLiteral; // TODO (dlarocque): We need to be able to store more than just strings
+    std::variant<std::string, int, float> literal;
     int line;
     
 public:
-    Token(TOKEN_TYPE type, std::string lexeme, std::string stringLiteral, int line) : type(type), lexeme(std::move(lexeme)), stringLiteral(std::move(stringLiteral)), line(line) {
-    }
+    Token(TOKEN_TYPE type, std::string lexeme, std::variant<std::string, int, float> literal, int line) : type(type), lexeme(std::move(lexeme)), literal(std::move(literal)), line(line) {}
     
-    [[nodiscard]] std::string toString() const {
+    [[nodiscard]] auto toString() const -> std::string {
         return lexeme;
     }
 };
