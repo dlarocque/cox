@@ -1,1 +1,2 @@
---repo_env='-std=c++20'
+# Enable Bzlmod for every Bazel command
+common --enable_bzlmod
