@@ -5,10 +5,7 @@ lox compiler in C++.
 ## Build
 
 ```
-mkdir build
-cd build
-cmake ..
-cmake --build .
+bazel run //:cox-entry
 ```
 
 ## Run
@@ -16,7 +13,7 @@ cmake --build .
 Compiling a lox file:
 
 ```
-./lox <file>
+./bazel-bin/lox [filePath]
 ```
 
 Running the REPL:
@@ -25,3 +22,6 @@ Running the REPL:
 ./lox
 ```
 
+## VSCode Setup
+
+Install the clangd extension, then run `bazel run @hedron_compile_commands//:refresh_all` to generate the `compile_commands.json`.
