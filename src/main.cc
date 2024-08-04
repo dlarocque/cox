@@ -1,22 +1,22 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <span>
 #include "cox.h"
 
-using namespace std;
-
-int main(const int argc, const char** argv) {
-    if (argc > 2) {
-        cerr << "Usage: cox [source file]" << endl;
+auto main(const int argc, const char** argv) -> int {
+    auto args = std::span(argv, argc);
+    if (args.size() > 2) {
+        std::cerr << "Usage: cox [source file]" << '\n';
     } else  {
-        if (argc == 2) {
+        if (args.size() == 2) {
             // Open the source file
-            const string filePath = argv[1];
-            string source;
-            stringstream buffer;
-            ifstream sourceFile(filePath);
+            const std::string filePath = args.at(1);
+            std::string source;
+            std::stringstream buffer;
+            std::ifstream sourceFile(filePath);
             if (!sourceFile.is_open()) {
-                cerr << "Error: Could not open source file" << endl;
+                std::cerr << "Error: Could not open source file" << '\n';
                 return 1;
             }
             
@@ -25,8 +25,8 @@ int main(const int argc, const char** argv) {
             source = buffer.str();
             sourceFile.close();
             
-            cout << "Source code: " << source << endl;
-            Cox::runFile(argv[1]);
+            std::cout << "Source code: " << source << '\n';
+            Cox::runFile(args.at(1));
         } else {
             Cox::runPrompt();
         }

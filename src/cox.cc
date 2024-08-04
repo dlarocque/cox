@@ -3,44 +3,42 @@
 #include "cox.h"
 #include "scanner.h"
 
-using namespace std;
-
-void Cox::runFile(string sourceFile) {
+void Cox::runFile(const std::string& sourceFile) {
     // Tokenize source code
     Scanner scanner(sourceFile);
     const auto& tokens = scanner.scanTokens();
     
     // Print out all tokens
     for (const auto& token : tokens) {
-        cout << token.toString() << endl;
+        std::cout << token.toString() << '\n';
     }
 }
 
-void Cox::run(string sourceLine) {
+void Cox::run(const std::string& sourceLine) {
     Scanner scanner(sourceLine);
     const auto& tokens = scanner.scanTokens();
     for (const auto& token : tokens) {
-        cout << token.toString() << endl;
+        std::cout << token.toString() << '\n';
     }
 }
 
 void Cox::runPrompt() {
     for (;;) { // Runs until ctrl+c pressed
         // Read a line of input from stdin
-        string line;
-        getline(cin, line);
+        std::string line;
+        getline(std::cin, line);
         Scanner scanner(line);
         const auto& tokens = scanner.scanTokens();
         for (const auto& token : tokens) {
-            cout << token.toString() << endl;
+            std::cout << token.toString() << '\n';
         }
     }
 }
 
-void Cox::error(int line, string message) {
+void Cox::error(const int& line, const std::string& message) {
     report(line, "", message);
 }
 
-void Cox::report(int line, string where, string message) {
-    cout << "[line " << line << "]" << "Error: " << where << ": " << message << endl;
+void Cox::report(const int& line, const std::string& where, const std::string& message) {
+    std::cout << "[line " << line << "]" << "Error: " << where << ": " << message << '\n';
 }

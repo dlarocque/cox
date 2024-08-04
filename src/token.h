@@ -1,6 +1,5 @@
 #include <string>
-
-using namespace std;
+#include <utility>
 
 enum TOKEN_TYPE {
     LEFT_PAREN,
@@ -41,19 +40,15 @@ enum TOKEN_TYPE {
 class Token {
 private:
     TOKEN_TYPE type;
-    string lexeme;
-    string string_literal; // TODO: We need to be able to store more than just strings
+    std::string lexeme;
+    std::string stringLiteral; // TODO (dlarocque): We need to be able to store more than just strings
     int line;
     
 public:
-    Token(TOKEN_TYPE type, string lexeme, string stringLiteral, int line) {
-        this->type = type;
-        this->lexeme = lexeme;
-        this->string_literal = stringLiteral;
-        this->line = line;
+    Token(TOKEN_TYPE type, std::string lexeme, std::string stringLiteral, int line) : type(type), lexeme(std::move(lexeme)), stringLiteral(std::move(stringLiteral)), line(line) {
     }
     
-    const string toString() const {
+    [[nodiscard]] std::string toString() const {
         return lexeme;
     }
 };

@@ -5,38 +5,34 @@
 #include "token.h"
 #include "cox.h"
 
-using namespace std;
-
 class Scanner {
-    string source;
-    vector<Token> tokens;
+    std::string source;
+    std::vector<Token> tokens;
     int start = 0; // First character in the lexeme being scanned
     int current = 0; // Character currently being scanned
     int line = 1;
     
 public:
-    Scanner(string source) {
-        this->source = source;
-    }
+    explicit Scanner(std::string source): source(std::move(source)) {}
     
-    vector<Token> scanTokens() {
+    auto scanTokens() -> std::vector<Token> {
         while (!isAtEnd()) {
             start = current;
             scanToken();
         }
         
-        tokens.push_back(Token(END, "", "", line));
+        tokens.emplace_back(END, "", "", line);
         return tokens;
     }
     
-    bool isAtEnd() {
+    auto isAtEnd() -> bool {
         return current >= source.length();
     }
     
     void scanToken() {
-        char c = advance();
-        cout << "Scanning character: " << c << endl;
-        switch (c) {
+        char currChar = advance();
+        std::cout << "Scanning character: " << currChar << '\n';
+        switch (currChar) {
             case ' ':
             case '\r':
             case '\t':
@@ -48,11 +44,11 @@ public:
                 captureString();
                 break;
             default:
-                if (isdigit(c)) {
-                    cout << "number" << endl;
+                if (isdigit(currChar) != 0) {
+                    std::cout << "number" << '\n';
                     number();
-                } else if (isalpha(c)) {
-                    cout << "identifier" << endl;
+                } else if (isalpha(currChar) != 0) {
+                    std::cout << "identifier" << '\n';
                     identifier();
                 } else {
                     Cox::error(line, "Unexpected character");
@@ -61,28 +57,34 @@ public:
         }
     }
     
-    // TODO: We need to store more than string literals
-    void addToken(TOKEN_TYPE type, string string_literal) {
+    // TODO (dlarocque): We need to store more than string literals
+    void addToken(TOKEN_TYPE type, const std::string& stringLiteral) {
         auto text = source.substr(start, current - start);
-        tokens.push_back(Token(type, text, string_literal, line));
+        tokens.emplace_back(type, text, stringLiteral, line);
     }
     
-    char advance() {
+    auto advance() -> char {
         return source[current++];
     }
     
-    void number() {
-        return;
+    auto number() -> void {
+        // TODO (dlarocque): Implement this
     }
     
-    char peek() {
-        if (isAtEnd()) return '\0';
+    auto peek() -> char {
+        if (isAtEnd()) {
+            return '\0';
+        }
         return source[current];
     }
     
     bool match(char expected) {
-        if (isAtEnd()) return false;
-        if (source[current] != expected) return false;
+        if (isAtEnd()) {
+            return false;
+        }
+        if (source[current] != expected) {
+            return false;
+        }
         
         current++;
         return true;
@@ -90,13 +92,14 @@ public:
     
     void captureString() {
         while (peek() != '"' && !isAtEnd()) {
-            if (peek() == '\n') line++;
+            if (peek() == '\n') {
+                line++;
+            }
             advance();
         }
         
         if (isAtEnd()) {
-            cerr << "Error: Unterminated string" << endl;
-            return;
+            std::cerr << "Error: Unterminated string" << '\n';
         } else {
             advance(); // The closing quote
             auto value = source.substr(start + 1, current - start - 1);
@@ -105,7 +108,9 @@ public:
     }
     
     void identifier() {
-        while(isalnum(peek())) advance();
+        while(isalnum(peek()) != 0) {
+            advance();
+        }
         addToken(IDENTIFIER, "");
     }
 };

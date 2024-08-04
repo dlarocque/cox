@@ -1,10 +1,9 @@
 #include <string>
 
-using namespace std;
 namespace Cox {
-    void runFile(string sourceFile);
-    void run(string sourceLine);
+    void runFile(const std::string& sourceFile);
+    void run(const std::string& sourceLine);
     void runPrompt();
-    void error(int line, string message);
-    void report(int line, string where, string message);
+    void error(const int& line, const std::string& message);
+    void report(const int& line, const std::string& where, const std::string& message);
 };
