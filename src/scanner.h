@@ -105,7 +105,6 @@ public:
     }
     
     auto captureNumber() -> void {
-        // TODO (dlarocque): Implement this
         while(isdigit(peek()) != 0) {
             advance();
         }

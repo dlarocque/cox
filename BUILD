@@ -19,3 +19,17 @@ cc_binary(
         "-std=c++20",
     ]
 )
+
+cc_test(
+    name = "scanner_test",
+    size = "small",
+    srcs = ["test/scanner_test.cc"],
+    copts = [
+        "-std=c++20",
+    ],
+    deps = [
+        ":cox",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)
