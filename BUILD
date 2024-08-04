@@ -6,10 +6,16 @@ cc_library(
         "src/scanner.h",
         "src/token.h"
         ],
+    copts = [
+        "-std=c++20",
+    ]
 )
 
 cc_binary(
     name = "cox-entry",
     srcs = ["src/main.cc"],
-    deps = [":cox"]
+    deps = [":cox"],
+    copts = [
+        "-std=c++20",
+    ]
 )
