@@ -98,8 +98,8 @@ public:
         if (isAtEnd()) {
             std::cerr << "Error: Unterminated string" << '\n';
         } else {
-            advance(); // The closing quote
-            auto value = source.substr(start + 1, current - start - 1);
+            advance(); // Advance to the closing quote
+            auto value = source.substr(start + 1, current - start - 2);
             addToken(STRING, value);
         }
     }
