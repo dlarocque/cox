@@ -1,6 +1,9 @@
 cc_library(
     name = "cox",
-    srcs = ["src/cox.cc"],
+    srcs = [
+        "src/cox.cc",
+        "src/token.cc"
+    ],
     hdrs = [
         "src/cox.h",
         "src/scanner.h",

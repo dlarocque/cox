@@ -1,6 +1,7 @@
 #include <string>
 #include <utility>
 #include <variant>
+#include <iostream>
 
 enum TOKEN_TYPE {
     LEFT_PAREN,
@@ -51,4 +52,14 @@ public:
     [[nodiscard]] auto toString() const -> std::string {
         return lexeme;
     }
+
+    auto operator==(const Token& other) const -> bool {
+        return (
+            this->type == other.type &&
+            this->lexeme == other.lexeme &&
+            this->literal == other.literal
+        );
+    }
+
+    friend auto operator<<(std::ostream& ostream, const Token& token) -> std::ostream&;
 };
