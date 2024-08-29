@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <cstdlib>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -108,14 +109,16 @@ public:
             advance();
         }
 
-        auto value = source.substr(start, current - start);
-        addToken(NUMBER, "");
+        std::string value = source.substr(start, current - start);
+        addToken(NUMBER, std::atoi(value.c_str()));
     }
     
     void captureIdentifier() {
         while(isalnum(peek()) != 0) {
             advance();
         }
-        addToken(IDENTIFIER, "");
+
+        std::string value = source.substr(start, current - start);
+        addToken(IDENTIFIER, value);
     }
 };
