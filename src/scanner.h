@@ -58,7 +58,6 @@ public:
         }
     }
     
-    // TODO (dlarocque): We need to store more than string literals
     void addToken(TOKEN_TYPE type, const std::variant<std::string, int, float>& literal) {
         auto text = source.substr(start, current - start);
         tokens.emplace_back(type, text, literal, line);
