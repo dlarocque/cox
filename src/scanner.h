@@ -42,6 +42,9 @@ public:
             case '\n':
                 line++;
                 break;
+            case '=':
+                addToken(TOKEN_TYPE::EQUAL, "=");
+                break;
             case '"':
                 captureString();
                 break;
